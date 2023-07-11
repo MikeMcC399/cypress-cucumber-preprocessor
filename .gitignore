@@ -5,3 +5,9 @@ lib/version.ts
 
 # Temporary directory for test execution
 tmp/
+
+node_modules/
+
+examples/**/cypress/videos
+examples/**/cypress/screenshots
+examples/**/cypress/downloads
