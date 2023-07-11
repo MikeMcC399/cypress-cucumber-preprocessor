@@ -4,7 +4,7 @@ on:
 
 jobs:
 
-  test:
+  test-default:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -15,3 +15,27 @@ jobs:
         with:
           working-directory: examples/ct-webpack-react-ts
           component: true
+
+  test-node:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [16, 18, 20]
+    name: Cypress Cucumber on Node v${{ matrix.node }}
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+      - run: node -v
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cypress tests
+        uses: cypress-io/github-action@v5
+        with:
+          working-directory: examples/ct-webpack-react-ts
+          component: true
+          command: npx cypress run --component
